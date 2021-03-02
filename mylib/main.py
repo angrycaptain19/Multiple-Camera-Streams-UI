@@ -176,11 +176,7 @@ class WorkCamera:
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        cam_list = [sys.argv[1]]
-    else:
-        cam_list = CAMERA_URL
-
+    cam_list = [sys.argv[1]] if len(sys.argv) > 1 else CAMERA_URL
     class_work = WorkCamera(cam_list)
 
     if RUN_MODE_THREAD:

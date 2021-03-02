@@ -15,33 +15,27 @@ def rm_tree(folder_name):
 
 def img_encode_b64(img_name):
     img_file = open(img_name, 'rb')
-    img_b64_data = base64.b64encode(img_file.read()).decode('UTF-8')
-    return img_b64_data
+    return base64.b64encode(img_file.read()).decode('UTF-8')
 
 
 def img_decode_b64(img_date, img_name):
-    img_out = open(img_name, 'wb')
-    img_out.write(img_date.decode('base64'))
-    img_out.close()
+    with open(img_name, 'wb') as img_out:
+        img_out.write(img_date.decode('base64'))
 
 
 def write_text(filename, text):
-    file1 = open(filename, 'w')
-    file1.write(text)
-    file1.close()
+    with open(filename, 'w') as file1:
+        file1.write(text)
 
 
 def append_text(filename, text):
-    file1 = open(filename, 'a')
-    file1.write(text)
-    file1.close()
+    with open(filename, 'a') as file1:
+        file1.write(text)
 
 
 def read_text(filename):
-    file1 = open(filename, 'r')
-    text = file1.read()
-    file1.close()
-
+    with open(filename, 'r') as file1:
+        text = file1.read()
     return text
 
 
@@ -65,13 +59,9 @@ def load_csv(filename):
     if not os.path.isfile(filename):
         return []
 
-    file_csv = open(filename, 'r')
-    reader = csv.reader(file_csv)
-    data_csv = []
-    for row_data in reader:
-        data_csv.append(row_data)
-
-    file_csv.close()
+    with open(filename, 'r') as file_csv:
+        reader = csv.reader(file_csv)
+        data_csv = [row_data for row_data in reader]
     return data_csv
 
 
@@ -79,17 +69,15 @@ def save_csv(filename, data):
     """
         save the "data" to filename as csv format.
     """
-    file_out = open(filename, 'wb')
-    writer = csv.writer(file_out)
-    writer.writerows(data)
-    file_out.close()
+    with open(filename, 'wb') as file_out:
+        writer = csv.writer(file_out)
+        writer.writerows(data)
 
 
 def append_csv(filename, data):
-    file_out = open(filename, 'a')
-    writer = csv.writer(file_out)
-    writer.writerows(data)
-    file_out.close()
+    with open(filename, 'a') as file_out:
+        writer = csv.writer(file_out)
+        writer.writerows(data)
 
 
 def get_distance_rect(rect1, rect2):
@@ -130,7 +118,4 @@ def check_overlap_rect(rect1, rect2):
     area_overlap = calc_overlap_area(rect1, rect2)
 
     # decide 2 rects are 80% overlap or not
-    if area_overlap / area1 > 0.6 or area_overlap / area2 > 0.6:
-        return True
-    else:
-        return False
+    return area_overlap / area1 > 0.6 or area_overlap / area2 > 0.6

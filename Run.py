@@ -189,9 +189,9 @@ class BestApp(App):
 
     def load_screen(self):
         self.screen_names = ['dlg_menu', 'dlg_setting']
-        for i in range(len(self.screen_names)):
-            screen = Builder.load_file('kv_dlg/' + self.screen_names[i] + '.kv')
-            self.screens[self.screen_names[i]] = screen
+        for screen_name in self.screen_names:
+            screen = Builder.load_file('kv_dlg/' + screen_name + '.kv')
+            self.screens[screen_name] = screen
         return True
 
 
